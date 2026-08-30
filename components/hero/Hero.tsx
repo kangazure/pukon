@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, Github, Instagram } from 'lucide-react';
-import { motion, useReducedMotion } from 'motion/react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { TypingText } from './RotatingText';
 import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
 
