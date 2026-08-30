@@ -1,0 +1,103 @@
+"use client";
+
+import Link from 'next/link';
+import Image from 'next/image';
+import { ArrowRight, Github, Instagram } from 'lucide-react';
+import { motion, useReducedMotion } from 'motion/react';
+import { TypingText } from './RotatingText';
+import { ScrollIndicator } from '@/components/ui/ScrollIndicator';
+
+function WhatsAppIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21" />
+      <path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1Zm0 0a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1" />
+      <path d="M9.5 13.5c.8.8 1.9 1.2 3 1.2" />
+    </svg>
+  );
+}
+
+function TikTokIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
+    </svg>
+  );
+}
+
+const socialLinks = [
+  { label: 'Instagram', href: 'https://instagram.com/skuyyy_y7', icon: Instagram },
+  { label: 'WhatsApp', href: 'https://wa.me/6287781974170', icon: WhatsAppIcon },
+  { label: 'GitHub', href: 'https://github.com/kangazure', icon: Github },
+  { label: 'TikTok', href: 'https://tiktok.com/@warung_sosmed', icon: TikTokIcon },
+];
+
+export function Hero() {
+  const reduce = useReducedMotion();
+
+  const motionProps = reduce
+    ? {}
+    : {
+        initial: { opacity: 0, y: 12 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+      };
+
+  return (
+    <section className="relative flex min-h-[100dvh] flex-col items-center justify-center px-6 pt-16 lg:flex-row lg:items-center lg:justify-between lg:gap-16 lg:px-16 xl:px-24">
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px)", backgroundSize: "64px 64px" }} />
+        <div className="absolute top-1/2 left-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--color-accent)] opacity-[0.03] blur-[120px]" />
+      </div>
+
+      <div className="relative z-10 flex flex-col items-center text-center lg:flex-1 lg:items-start lg:text-left">
+        <motion.div {...motionProps} className="mb-8 inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] px-4 py-1.5">
+          <span className="relative flex h-2 w-2"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--color-accent)] opacity-40" /><span className="relative inline-flex h-2 w-2 rounded-full bg-[var(--color-accent)]" /></span>
+          <span className="text-[12px] tracking-wide text-[var(--color-text-secondary)]">#wongmumet</span>
+        </motion.div>
+
+        <motion.div {...motionProps} className="mb-6">
+          <TypingText
+            texts={["I'm Riko Ardianto", "Cyber Security"]}
+            textColors={["", "#06b6d4"]}
+            className="text-[clamp(2.5rem,8vw,5rem)] font-semibold tracking-tight text-[var(--color-text-primary)]"
+          />
+        </motion.div>
+
+        <motion.p {...motionProps} className="mb-6 max-w-lg text-[15px] leading-relaxed text-[var(--color-text-secondary)]">
+          I am Riko Ardianto, a cybersecurity enthusiast and network engineer with a strong interest in technology, computer networking, system security and the development of digital solutions.
+        </motion.p>
+
+        <motion.div {...motionProps} className="mb-8 flex items-center gap-4">
+          {socialLinks.map((s) => (
+            <a key={s.label} href={s.href} target="_blank" rel="noopener noreferrer" aria-label={s.label} className="text-[var(--color-text-muted)] transition-colors hover:text-[var(--color-text-primary)]">
+              <s.icon size={20} />
+            </a>
+          ))}
+        </motion.div>
+
+        <motion.div {...motionProps} className="flex items-center gap-3">
+          <Link href="/projects" className="inline-flex items-center gap-2 rounded-lg bg-[var(--color-primary-accent)] px-5 py-2.5 text-[13px] font-medium text-[var(--color-background)] transition-all hover:bg-[var(--color-primary-accent)]/90 active:scale-[0.98]">Lihat Proyek</Link>
+          <Link href="/blog" className="inline-flex items-center gap-2 rounded-lg border border-[var(--color-border)] px-5 py-2.5 text-[13px] font-medium text-[var(--color-primary-accent)] transition-all hover:border-[var(--color-border-strong)] hover:bg-[var(--color-surface)] active:scale-[0.98]">
+            Baca Blog <ArrowRight size={14} />
+          </Link>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <ScrollIndicator />
+      </div>
+
+      <motion.div {...motionProps} className="relative z-10 mt-16 flex items-center justify-center lg:mt-10 lg:flex-1">
+        <div className="absolute h-[340px] w-[340px] bg-[var(--color-accent)] opacity-[0.05] blur-[100px]" />
+        <div className="absolute h-[300px] w-[280px] translate-x-3 translate-y-4 bg-black opacity-40 blur-[40px] sm:h-[380px] sm:w-[340px]" style={{ borderRadius: '40% 60% 55% 45% / 45% 40% 60% 55%' }} aria-hidden="true" />
+        <div className="relative h-[300px] w-[280px] overflow-hidden sm:h-[380px] sm:w-[340px]" style={{ borderRadius: '40% 60% 55% 45% / 45% 40% 60% 55%', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5)) drop-shadow(0 0 60px rgba(59,130,246,0.15))' }}>
+          <Image src="/images/profile-placeholder.svg" alt="Riko Ardianto" fill className="object-cover" priority sizes="(max-width: 640px) 280px, (max-width: 1024px) 340px, 340px" unoptimized />
+          <div className="pointer-events-none absolute inset-0" style={{ borderRadius: '40% 60% 55% 45% / 45% 40% 60% 55%', background: 'linear-gradient(to bottom, transparent 60%, var(--color-background) 95%)' }} />
+          <div className="pointer-events-none absolute inset-0" style={{ borderRadius: '40% 60% 55% 45% / 45% 40% 60% 55%', background: 'radial-gradient(ellipse 80% 60% at 50% 30%, transparent 50%, var(--color-background) 100%)' }} />
+        </div>
+      </motion.div>
+
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--color-background)] to-transparent" />
+    </section>
+  );
+}

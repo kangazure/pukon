@@ -1,0 +1,66 @@
+---
+title: "Basic Nmap for Network Discovery"
+description: "An introductory guide to using Nmap for discovering hosts and services on a network."
+author: "Riko Ardianto"
+publishedDate: "2026-08-01"
+updatedDate: "2026-08-01"
+readingTime: "5 min"
+coverImage: "/images/blog/nmap-network-discovery.webp"
+categories: ["Cybersecurity", "Networking"]
+tags: ["nmap", "network discovery", "security"]
+---
+
+# Introduction
+
+Nmap (Network Mapper) is a powerful open‑source tool for network discovery and security auditing. In this article we will cover the basics of running simple scans to identify live hosts and open ports.
+
+## Installation
+
+```bash
+# On Debian/Ubuntu
+sudo apt-get update && sudo apt-get install -y nmap
+```
+
+## Basic Ping Scan
+
+The most common first step is a ping scan to see which hosts are up:
+
+```bash
+nmap -sn 192.168.1.0/24
+```
+
+This sends ICMP echo requests and reports live hosts.
+
+## Port Scan
+
+After identifying live hosts you can scan for open ports:
+
+```bash
+nmap -p 1-1024 192.168.1.42
+```
+
+The `-p` flag limits the scan to the first 1024 ports.
+
+## Service Detection
+
+To detect the services running on open ports use the `-sV` flag:
+
+```bash
+nmap -sV 192.168.1.42
+```
+
+Nmap will attempt to fingerprint the service and version.
+
+## Saving Output
+
+You can save results to a file for later analysis:
+
+```bash
+nmap -A -oN scan.txt 192.168.1.0/24
+```
+
+`-A` enables OS detection, version detection, script scanning, and traceroute.
+
+---
+
+*This article is for educational purposes and should only be used on networks you have permission to test.*
