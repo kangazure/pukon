@@ -2,6 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import fs from 'fs';
 import path from 'path';
+import { parseFrontMatter } from '@/lib/blog';
 
 interface PostMeta {
   title: string;
@@ -20,7 +21,7 @@ export default async function BlogPage() {
     const slug = file.replace(/\.mdx?$/, '');
     const content = fs.readFileSync(path.join(postsDir, file), 'utf8');
     const metaMatch = content.match(/^---\n([\s\S]*?)\n---/);
-    const meta = metaMatch ? JSON.parse(JSON.stringify(eval('(' + metaMatch[1] + ')'))) : {};
+    const meta = metaMatch ? parseFrontMatter(metaMatch[1]) : {};
     return {
       title: meta.title ?? slug,
       description: meta.description ?? '',

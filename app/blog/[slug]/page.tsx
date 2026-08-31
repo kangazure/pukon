@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { remark } from 'remark';
 import html from 'remark-html';
+import { parseFrontMatter } from '@/lib/blog';
 
 interface Props {
   params: { slug: string };
@@ -21,7 +22,7 @@ export default async function BlogPost({ params }: Props) {
   if (!fs.existsSync(filePath)) notFound();
   const raw = fs.readFileSync(filePath, 'utf8');
   const [metaRaw, contentRaw] = raw.split('---').filter(Boolean);
-  const meta = eval('(' + metaRaw + ')'); // simple front‑matter parsing (trusted source)
+  const meta = parseFrontMatter(metaRaw);
   const processed = await remark().use(html).process(contentRaw);
   const contentHtml = processed.toString();
 
